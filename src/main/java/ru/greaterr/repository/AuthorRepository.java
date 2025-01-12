@@ -6,6 +6,6 @@ import ru.greaterr.entity.Author;
 import ru.greaterr.entity.Book;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
-    boolean existsBookByTitleAndAuthorName(String title, String name);
+public interface AuthorRepository extends JpaRepository<Author, Long> {
+    boolean existsAuthorByName(String name);
 }

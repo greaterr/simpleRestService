@@ -2,6 +2,7 @@ package ru.greaterr.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.greaterr.entity.Author;
 
 
 @Data
@@ -9,8 +10,9 @@ import lombok.NoArgsConstructor;
 public class BookDto {
     private Long id;
     private String title;
-    private String  author;
+    private Author author;
     private Integer year;
+
 }
 
 
