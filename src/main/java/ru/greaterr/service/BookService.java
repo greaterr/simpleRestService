@@ -45,7 +45,7 @@ public class BookService {
         return bookDtoList;
     }
 
-    public BookDto saveBook(@RequestBody BookDto bookDto) {
+    public BookDto saveBook(BookDto bookDto) {
         logger.debug("Trying to add new book with title: {} and author: {}", bookDto.getTitle(), bookDto.getAuthor());
         if(bookRepository.existsBookByTitleAndAuthor(bookDto.getTitle(), bookDto.getAuthor())) {
             logger.error("Book with title: {}, and author: {} - already exists", bookDto.getTitle(), bookDto.getAuthor());
@@ -56,4 +56,17 @@ public class BookService {
         return bookMapper.toDto(savedBook);
     }
 
+    public BookDto updateBook(BookDto bookDto) {
+        logger.debug("Validating update request for book with ID: {}", bookDto.getId());
+        Book existingBook = bookRepository.findById(bookDto.getId())
+                .orElseThrow(() -> {
+                    logger.error("Book with ID {} does not exist", bookDto.getId());
+                    return new BookNotFoundException(bookDto.getId());
+                });
+
+        existingBook.setYear(bookDto.getYear());
+        Book updatedUser = bookRepository.save(existingBook);
+        logger.info("Book with ID {} successfully updated", updatedUser.getId());
+        return bookMapper.toDto(updatedUser);
+    }
 }

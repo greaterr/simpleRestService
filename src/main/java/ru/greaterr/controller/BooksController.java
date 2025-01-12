@@ -42,4 +42,12 @@ public class BooksController {
         logger.info("New book was successfully saved with ID: {}", savedBook.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
+
+    @PutMapping("/books/update")
+    public ResponseEntity<BookDto> updateBook(@RequestBody BookDto bookDto) {
+        BookDto updatedBook = bookService.updateBook(bookDto);
+        return ResponseEntity.ok(updatedBook);
+    }
+
+
 }

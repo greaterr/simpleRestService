@@ -6,10 +6,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Data
 @NoArgsConstructor
+@DynamicUpdate
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
