@@ -35,7 +35,7 @@ public class AuthorService {
         var authorList = authorRepository.findAll()
                 .stream()
                 .map(authorMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
         logger.debug("Author found: {}", authorList.size());
         return authorList;
     }
