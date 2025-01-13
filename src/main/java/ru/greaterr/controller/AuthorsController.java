@@ -56,4 +56,10 @@ public class AuthorsController {
         authorService.deleteAuthors(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<AuthorDto> findAuthorByNameIgnoreRegistry(@PathVariable String name) {
+        AuthorDto foundAuthor = authorService.findAuthorIgnoreRegistry(name);
+        return ResponseEntity.ok(foundAuthor);
+    }
 }

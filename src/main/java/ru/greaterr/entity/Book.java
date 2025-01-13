@@ -1,5 +1,6 @@
 package ru.greaterr.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Data
 @NoArgsConstructor
 @DynamicUpdate
+@Table(name="books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +18,7 @@ public class Book {
     private String title;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
+    @JsonBackReference
     private Author author;
     private Integer year;
 }

@@ -75,4 +75,15 @@ public class AuthorService {
         authorRepository.deleteById(id);
         logger.debug("Author with ID {} successfully deleted", id);
     }
+
+    public AuthorDto findAuthorIgnoreRegistry(String name) {
+        logger.debug("Validating find request for author with name: {}", name);
+        if (!authorRepository.existsAuthorByNameIgnoreCase(name)) {
+            logger.error("Author with name {} does not exist", name);
+            throw new IllegalArgumentException("Author with name {} does not exist");
+        }
+        var foundAuthor = authorRepository.findByNameIgnoreCase(name);
+        logger.debug("Author with name {} successfully found", foundAuthor.getName());
+        return  authorMapper.toDto(foundAuthor);
+    }
 }
