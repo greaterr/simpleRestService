@@ -52,18 +52,18 @@ public class AuthorService {
         return authorMapper.toDto(savedAuthor);
     }
 
-    public AuthorDto updateAuthor(AuthorDto bookDto) {
-        logger.debug("Validating update request for author with ID: {}", bookDto.getId());
-        Author existingAuthor = authorRepository.findById(bookDto.getId())
+    public AuthorDto updateAuthor(AuthorDto authorDto) {
+        logger.debug("Validating update request for author with ID: {}", authorDto.getId());
+        Author existingAuthor = authorRepository.findById(authorDto.getId())
                 .orElseThrow(() -> {
-                    logger.error("Author with ID {} does not exist", bookDto.getId());
+                    logger.error("Author with ID {} does not exist", authorDto.getId());
                     return new IllegalArgumentException("Author with ID {} does not exist");
                 });
 
-        existingAuthor.setName(bookDto.getName());
-        Author updatedBook = authorRepository.save(existingAuthor);
-        logger.debug("Author with ID {} successfully updated", updatedBook.getId());
-        return authorMapper.toDto(updatedBook);
+        existingAuthor.setName(authorDto.getName());
+        Author updatedAuthor = authorRepository.save(existingAuthor);
+        logger.debug("Author with ID {} successfully updated", updatedAuthor.getId());
+        return authorMapper.toDto(updatedAuthor);
     }
 
     public void deleteAuthors(Long id) {

@@ -12,7 +12,6 @@ public class BookDto {
     private String title;
     private Author author;
     private Integer year;
-
 }
 
 

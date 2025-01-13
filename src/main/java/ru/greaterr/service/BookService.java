@@ -37,7 +37,7 @@ public class BookService {
         var bookList = bookRepository.findAll()
                 .stream()
                 .map(bookMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
         logger.debug("Books found: {}", bookList.size());
         return bookList;
     }

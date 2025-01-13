@@ -5,8 +5,9 @@ import org.mapstruct.MappingConstants;
 import ru.greaterr.dto.BookDto;
 import ru.greaterr.entity.Book;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses={AuthorMapper.class})
 public interface BookMapper {
     Book toEntity(BookDto bookDto);
+
     BookDto toDto(Book bookEntity);
 }
