@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.greaterr.dto.AuthorDto;
 import ru.greaterr.entity.Author;
+import ru.greaterr.exception.AuthorNotFoundException;
 import ru.greaterr.repository.AuthorRepository;
 import ru.greaterr.utils.AuthorMapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -44,7 +44,7 @@ public class AuthorService {
         logger.debug("Trying to add new author with name: {}", authorDto.getName());
         if (authorRepository.existsAuthorByName(authorDto.getName())) {
             logger.error("Author with name: {} - already exists", authorDto.getName());
-            throw new IllegalArgumentException("Author with ID: " + authorDto.getId() + " does not exist");
+            throw new AuthorNotFoundException(authorDto.getId());
         }
         Author author = authorMapper.toEntity(authorDto);
         Author savedAuthor = authorRepository.save(author);
@@ -57,7 +57,7 @@ public class AuthorService {
         Author existingAuthor = authorRepository.findById(authorDto.getId())
                 .orElseThrow(() -> {
                     logger.error("Author with ID {} does not exist", authorDto.getId());
-                    return new IllegalArgumentException("Author with ID {} does not exist");
+                    return new AuthorNotFoundException(authorDto.getId());
                 });
 
         existingAuthor.setName(authorDto.getName());
@@ -70,7 +70,7 @@ public class AuthorService {
         logger.debug("Validating delete request for author with ID: {}", id);
         if (!authorRepository.existsById(id)) {
             logger.error("Author with ID {} does not exist", id);
-            throw new IllegalArgumentException("Author with ID {} does not exist");
+            throw new AuthorNotFoundException(id);
         }
         authorRepository.deleteById(id);
         logger.debug("Author with ID {} successfully deleted", id);
@@ -80,10 +80,10 @@ public class AuthorService {
         logger.debug("Validating find request for author with name: {}", name);
         if (!authorRepository.existsAuthorByNameIgnoreCase(name)) {
             logger.error("Author with name {} does not exist", name);
-            throw new IllegalArgumentException("Author with name {} does not exist");
+            throw new AuthorNotFoundException(name);
         }
         var foundAuthor = authorRepository.findByNameIgnoreCase(name);
         logger.debug("Author with name {} successfully found", foundAuthor.getName());
-        return  authorMapper.toDto(foundAuthor);
+        return authorMapper.toDto(foundAuthor);
     }
 }

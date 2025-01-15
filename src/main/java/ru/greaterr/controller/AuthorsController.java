@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.greaterr.dto.AuthorDto;
 import ru.greaterr.service.AuthorService;
-import ru.greaterr.service.BookService;
 
 import java.util.List;
 
@@ -47,7 +46,9 @@ public class AuthorsController {
 
     @PutMapping("/update")
     public ResponseEntity<AuthorDto> updateAuthor(@RequestBody AuthorDto authorDto) {
+        logger.info("Received PUT request for update author: {}", authorDto);
         AuthorDto updatedAuthor = authorService.updateAuthor(authorDto);
+        logger.info("Existing author was successfully updated with ID: {}", updatedAuthor.getId());
         return ResponseEntity.ok(updatedAuthor);
     }
 
@@ -57,7 +58,7 @@ public class AuthorsController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/find/{name}")
     public ResponseEntity<AuthorDto> findAuthorByNameIgnoreRegistry(@PathVariable String name) {
         AuthorDto foundAuthor = authorService.findAuthorIgnoreRegistry(name);
         return ResponseEntity.ok(foundAuthor);
