@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
 
@@ -22,5 +23,6 @@ public class Author {
     private String name;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @Lazy
     private List<Book> books;
 }
